@@ -8,7 +8,7 @@ from database_setup import Restaurant, Base, MenuItem, User
 
 
 
-engine = create_engine('sqlite:///restaurantmenuwithusers.db')
+engine = create_engine('postgresql://catalog_user:password@localhost/catalog_db')
 
 # Bind the engine to the metadata of the Base class so that the
 
