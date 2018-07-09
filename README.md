@@ -3,7 +3,7 @@
 A baseline installation of a Linux server and prepare it to host your web applications. You will secure your server from a number of attack vectors, install and configure a database server, and deploy one of your existing web applications onto it.
 
 
-#### Link to Project: ec2-18-188-166-211.us-east-2.compute.amazonaws.com/
+#### Link to Project: ec2-18-188-166-211.us-east-2.compute.amazonaws.com
 ##### Public IP Address: 18.188.166.211
 ##### SSH port: 2200
 #
@@ -15,7 +15,16 @@ A baseline installation of a Linux server and prepare it to host your web applic
 - Note down your public ip address.
 - Save the private key.
 #
-#### 2. Launch Virtual Machine and SSH into the instance
+#### 2. List of required softwares/packages:
+- Git
+- Apache2
+- Pip
+- Python 
+- Flask
+- Postgresql
+
+#
+#### 3. Launch Virtual Machine and SSH into the instance
 - Change your directory to where the private key is installed (e.g Downloads)
 ```sh
 $ cd Downloads/
@@ -30,7 +39,7 @@ $ chmod 600 udacity_project.pem
   ```
  
 #
-#### 3. Create New User
+#### 4. Create New User
 - Create new user "grader"
  ```sh
 $ sudo adduser grader
@@ -45,7 +54,7 @@ $ grader ALL=(ALL:ALL) ALL
   ```
   - Save and exit.
  #
-#### 4. Configure key-based authentication for new user grader
+#### 5. Configure key-based authentication for new user grader
 - Open a new terminal on your local machine.
 - Go to the directory where you want to save the key and run:
 ```sh
@@ -58,7 +67,7 @@ $ sudo nano /home/grader/.ssh/authorized_keys
 ```
 - Copy and paste the content of the key you created on your lcal machine in the authorized_keys file. Save and exit. 
 #
-####  5. Activate Password authentication to login using grader user
+####  6. Activate Password authentication to login using grader user
 - Run ``` $ sudo nano /etc/ssh/sshd_config. ```
 - Find the PasswordAuthentication line and edit it from no to yes.
 - Save the file.
@@ -69,7 +78,7 @@ $ ssh -i udacity_project.pem grader@XX.XX.XX.XX
 ```
 Tip: Open a new terminal and try logging in using grader user to check if it works, before exiting from the root user.
 
-#### 6. Activate Key-based authentication
+#### 7. Activate Key-based authentication
 - Run ``` $ sudo nano /etc/ssh/sshd_config. ```
 - Find the PasswordAuthentication line and edit it to no.
 - Save the file.
@@ -77,14 +86,14 @@ Tip: Open a new terminal and try logging in using grader user to check if it wor
 - Exit from the user using ```$ exit``` command. 
 - Log in again.
 #
-#### 7. Change port from 22 to 2200
+#### 8. Change port from 22 to 2200
 - Run ``` $ sudo nano /etc/ssh/sshd_config. ```
 - Find the Port line and edit it from 22 to 2200.
 - Save the file.
 - Run ```$ sudo service ssh restart``` to restart the service.
 - Open a new terminal and try logging in using the grader user and port 2200.
 #
-#### 8. Disable login for root user
+#### 9. Disable login for root user
 - Run ``` $ sudo nano /etc/ssh/sshd_config. ```
 - Find the PermitRootLogin and edit it from yes to no.
 - Save the file.
@@ -93,7 +102,7 @@ Tip: Open a new terminal and try logging in using grader user to check if it wor
 Now you can login into VM through SSH using:
  $ ssh -i udacity_project.pem grader@XX.XX.XX.XX -p 2200
 #
-#### 9. Configure local timezone to UTC
+#### 10. Configure local timezone to UTC
 - Open time configuration dialog and set it to UTC using: 
 ```sh
 $ sudo dpkg-reconfigure tzdata.
@@ -103,13 +112,13 @@ $ sudo dpkg-reconfigure tzdata.
 $ sudo apt-get install ntp 
 ```
 #
-#### 10. Update all packages
+#### 11. Update all packages
 ```sh
 $ sudo apt-get update.
 $ sudo apt-get upgrade.
 ```
 #
-#### 11. Configure the Firewall (UFW)
+#### 12. Configure the Firewall (UFW)
 ```sh 
  $ sudo ufw default deny incoming
  $ sudo ufw default allow outgoing
@@ -119,7 +128,7 @@ $ sudo apt-get upgrade.
  $ sudo ufw enable
  ```
  #
- #### 12. Install and Configure Apache2, mod-wsgi and Git
+ #### 13. Install and Configure Apache2, mod-wsgi and Git
  ```sh
  $ sudo apt-get install apache2 libapache2-mod-wsgi git
 ```
@@ -127,7 +136,7 @@ $ sudo apt-get upgrade.
  $ sudo a2enmod wsgi
 ```
 #
-#### 13.  Install and configure PostgreSQL
+#### 14.  Install and configure PostgreSQL
 - Install PostgreSQL Python dependencies:
 ```sh
 $ sudo apt-get install libpq-dev python-dev
@@ -152,13 +161,13 @@ Write following commands to setup the database:
 * Log out from PostgreSQL: `# \q`. Then return to the *grader* user: `$ exit`
 ```
 #
-#### 14. Make changes in your Flask Application
+#### 15. Make changes in your Flask Application
 Inside the Flask application, find the database connection line and make following changes:
 ```sh
 engine = create_engine('postgresql://catalog_user:password@localhost/catalog_db')
 ```
 #
-#### 15. Install Flask and other dependencies
+#### 16. Install Flask and other dependencies
 ```sh
 $ sudo apt-get install python-pip
 $ sudo pip install Flask
@@ -166,7 +175,7 @@ $ sudo pip install httplib2 oauth2client sqlalchemy psycopg2 sqlalchemy_utils
 $ sudo pip install requests
 ```
 #
-#### 16. Clone the Catalog app from Github
+#### 17. Clone the Catalog app from Github
 - Make a directory in /var/www
  ```
 $ sudo mkdir /var/www/catalog
@@ -200,7 +209,7 @@ $ python database_setup.py
 $ python lotsofmenus.py
 ```
 #
-#### 17. Edit the default Virtual File with following content:
+#### 18. Edit the default Virtual File with following content:
 ```sh
 $  sudo nano /etc/apache2/sites-available/000-default.conf
 ```
@@ -221,13 +230,13 @@ $  sudo nano /etc/apache2/sites-available/000-default.conf
 </VirtualHost>
 ```
 #
-#### 18. Restart Apache and launch the app
+#### 19. Restart Apache and launch the app
 ```sh
 $ sudo service apache2 restart
 ```
 - Run your application by entering your Public IP address in the browser i.e ec2-18-188-166-211.us-east-2ws.com
 #
-#### 19. Setup Google login:
+#### 20. Setup Google login:
 - Open [Google Console](https://console.developers.google.com/apis/credentials/oauthclient/384392414613-uimmn8b61n5vvqhhvb77p9jad8c611rd.apps.googleusercontent.com?project=restaurant-menu-app-194512).
 - Add "http://ec2-18-188-166-211.us-east-2.compute.amazonaws.com" under the Authorized JavaScript origins section.
 - Add "http://ec2-18-188-166-211.us-east-2.compute.amazonaws.com/login" under the Authorized redirect URIs section.
@@ -239,7 +248,7 @@ $ git commit -m "updated JSON file"
 $ git push
 ```
 #
-#### 20. Setup Facebook login:
+#### 21. Setup Facebook login:
 - Open [Facebook Developer Console](https://developers.facebook.com/apps/2005618296319205/fb-login/settings/).
 - Add "http://ec2-18-188-166-211.us-east-2.compute.amazonaws.com/login" under Valid OAuth Redirect URIs section.
 - Add "http://ec2-18-188-166-211.us-east-2.compute.amazonaws.com" under Settings > Basic > Site URL section. 
