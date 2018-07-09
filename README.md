@@ -11,7 +11,7 @@ A baseline installation of a Linux server and prepare it to host your web applic
 #
 ## Steps to Configure Linux server
 #### 1. Create Development Environment Instance
-- [Create Environment](https://www.udacity.com/account#!/development_environment)
+- [Create Environment](https://us-east-2.console.aws.amazon.com/ec2/v2/home?region=us-east-2#Home:) On AWS EC2.
 - Note down your public ip address.
 - Save the private key.
 #
